@@ -14,16 +14,16 @@ class Usuario:
         self.senha = senha
 
     def cadastrar(self, cursor, conexao):
-        cursor.execute("SELECT * FROM Usuarios WHERE email = %s", (self.email,))
+        cursor.execute("SELECT * FROM user WHERE email = %s", (self.email,))
         if cursor.fetchone():
             print("Já existe um usuário com este email.")
             return
-        cursor.execute("INSERT INTO Usuarios(nome, email, senha) VALUES (%s, %s, %s)", (self.nome, self.email, self.senha))
+        cursor.execute("INSERT INTO user (nome, email, senha) VALUES (%s, %s, %s)", (self.nome, self.email, self.senha))
         conexao.commit()
         print(f"{self.nome} cadastrado(a) com sucesso.")
 
     def login(self, cursor):
-        cursor.execute("SELECT nome FROM Usuarios WHERE email = %s AND senha = %s", (self.email, self.senha))
+        cursor.execute("SELECT nome FROM user WHERE email = %s AND senha = %s", (self.email, self.senha))
         resultado = cursor.fetchone()
         if resultado:
             print(f"Bem-vindo(a), {resultado[0]}.")
